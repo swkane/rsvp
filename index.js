@@ -6,10 +6,21 @@ const app = express();
 // takes form data and converts to json
 app.use(express.urlencoded( { extended: false } ) );
 
+// set the views directory
 app.set('view engine', 'pug');
 app.set('views', './views');
 
-app.listen(3000, () => console.log('heeeyyoooooo we run this server'));
+const dbName = "rsvp";
+const DB_USER = "admin";
+const DB_PASSWORD = "admin";
+const DB_URI = "ds111430.mlab.com:11430";
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, () => {
+    // mongoose connection / setup
+    mongoose.connect(`mongodb://${DB_USER}:${DB_PASSWORD}@${DB_URI}/${dbName}`);
+    console.log('heeeyyoooooo we run this server')
+});
 
 // Model
 let responseSchema = mongoose.Schema({
@@ -22,8 +33,7 @@ let responseSchema = mongoose.Schema({
 // Instance
 let Response = mongoose.model('Response', responseSchema);
 
-// mongoose connection / setup
-mongoose.connect('mongodb://localhost/rsvp');
+// mongoose.connection refers to the db
 let db = mongoose.connection;
 
 // Home Page
