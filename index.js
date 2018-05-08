@@ -1,5 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const Response = require('./models/response');
 
 const app = express();
 
@@ -21,17 +22,6 @@ app.listen(PORT, () => {
     mongoose.connect(`mongodb://${DB_USER}:${DB_PASSWORD}@${DB_URI}/${dbName}`);
     console.log('heeeyyoooooo we run this server')
 });
-
-// Model
-let responseSchema = mongoose.Schema({
-    name: String,
-    email: String,
-    attending: Boolean,
-    guests: Number
-});
-
-// Instance
-let Response = mongoose.model('Response', responseSchema);
 
 // mongoose.connection refers to the db
 let db = mongoose.connection;
